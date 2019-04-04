@@ -4,11 +4,6 @@ const fs = require('fs');
 require('dotenv').config();
 // mongo
 const mongo = require('mongodb').MongoClient;
-let db;
-mongo.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, (err, client) => {
-    db = client.db(process.env.DBNAME);
-});
-
 // aws
 const aws = require('aws-sdk');
 aws.config.update({
@@ -36,29 +31,34 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 // CORS
 const cors = require('cors');
 app.use(cors());
-//
+// ROUTERS
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname+'/client/build/index.html'));
-});
+mongo.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, (err, client) => {
+    const db = client.db(process.env.DBNAME);
+    app.get('/', (req, res) => {
+        res.sendFile(path.join(__dirname+'/client/build/index.html'));
+    });
 
-app.post('/upload', upload.array('file', 20), (req, res) => {
-    Promise.all(req.files.map((file) => checkValidationAndAppendExtension(file)))
-        .then(resultObjArray => {
-            return resultObjArray.map(obj => {
-                if (obj.status === 'success') return obj.promise
+    app.post('/upload', upload.array('file', 20), (req, res) => {
+        Promise.all(req.files.map((file) => checkValidationAndAppendExtension(file)))
+            .then(resultObjArray => {
+                return resultObjArray.map(obj => {
+                    if (obj.status === 'success') return obj.promise
+                })
             })
-        })
-        .then(fileArrayReadyForSave => {
-            Promise.all(fileArrayReadyForSave).then((links) => {
-                console.log(links);
-                res.send('success');
+            .then(fileArrayReadyForSave => {
+                Promise.all(fileArrayReadyForSave).then((links) => {
+                    console.log(links);
+                    res.send('success');
+                });
             });
-        });
+    });
+
+    const port = process.env.PORT || 5000;
+    app.listen(port);
 });
 
-const port = process.env.PORT || 5000;
-app.listen(port);
+
 
 function deleteFile(path, resolve, originalName) {
     fs.unlink(path, (err) => {
