@@ -11,4 +11,17 @@ body {
 .index-wrapper {
     width: 100%;
     min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+}
+.index-content-area-wrapper {
+    margin-top: 100px;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
 }

@@ -11,8 +11,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.435.0",
     "cors": "^2.8.5",
+    "dotenv": "^7.0.0",
     "express": "^4.16.4",
-    "multer": "^1.4.1"
+    "file-type": "^10.10.0",
+    "mongodb": "^3.2.2",
+    "multer": "^1.4.1",
+    "read-chunk": "^3.2.0"
   }
 }

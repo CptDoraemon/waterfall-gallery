@@ -229,13 +229,12 @@ function UploaderIcon(props) {
     const icon = props.isActive
         ? <FiArrowDownRight size={'30px'} />
         : <IoMdCloudUpload size={'30px'}/>;
-    const wrapperClassName = props.isActive
-        ? 'uploader-icon-wrapper uploader-icon-active'
-        : 'uploader-icon-wrapper uploader-icon-inactive';
     return (
-        <div className={wrapperClassName} onClick={props.activationToggler}>
-            <div className='uploader-icon-centering'>
-                { icon }
+        <div className='uploader-icon-wrapper' onClick={props.activationToggler}>
+            <div className={props.isActive ? 'uploader-icon-active': 'uploader-icon-inactive'}>
+                <div className='uploader-icon-centering'>
+                    { icon }
+                </div>
             </div>
         </div>
     )

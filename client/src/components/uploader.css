@@ -4,22 +4,23 @@
     border-radius: 25px;
     transition: 0.3s;
     cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 .uploader-icon-centering {
     padding: 10px;
 }
-.uploader-icon-active {
+.uploader-icon-active, .uploader-icon-inactive  {
+    width: 100%;
+    height: 100%;
     background-color: white;
     color: rgb(29, 161, 242);
     position: relative;
+    border-radius: 25px;
 }
 .uploader-icon-active:hover {
     color: red;
-}
-.uploader-icon-inactive  {
-    background-color: white;
-    color: rgb(29, 161, 242);
-    position: relative;
 }
 .uploader-icon-inactive:hover {
     background-color: rgb(29, 161, 242);
@@ -97,6 +98,8 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    overflow: scroll;
+    min-height: 100px;
 }
 .functional-uploader-canvas-active {
     border: 2px dashed green;
