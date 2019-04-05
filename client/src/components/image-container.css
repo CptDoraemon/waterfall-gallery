@@ -6,6 +6,12 @@
     overflow: hidden;
     border-radius: 25px;
     transition: 0.3s;
+
+    /* fix animation overflow */
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0)
 }
 .image-container-image {
     height: 100%;
@@ -38,7 +44,7 @@
     bottom: -50%;
     font-size: 14px;
     font-weight: 300;
-    max-height: 50%;
+    height: 50%;
 }
 .image-container-wrapper:hover {
     box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.3);
