@@ -40,7 +40,7 @@ mongo.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, (err, client) 
     });
 
     app.post('/upload', upload.array('file', 20), (req, res) => {
-        Promise.all(req.files.map((file) => checkValidationAndAppendExtension(file)))
+        Promise.all(req.files.map((file) => checkValidationAndAppendExtension(file, db)))
             .then(resultObjArray => {
                 return resultObjArray.map(obj => {
                     if (obj.status === 'success') return obj.promise
@@ -71,7 +71,7 @@ function deleteFile(path, resolve, originalName) {
     })
 }
 
-function checkValidationAndAppendExtension(file) {
+function checkValidationAndAppendExtension(file, db) {
     return new Promise((resolve, reject) => {
         let filePath = file.path;
         let fileName = file.filename;
@@ -96,7 +96,7 @@ function checkValidationAndAppendExtension(file) {
                 } else {
                     resolve({
                         status: 'success',
-                        promise: uploadToAWSAndUpdateDB(filePath, fileName, file.originalname)
+                        promise: uploadToAWSAndUpdateDB(filePath, fileName, file.originalname, db)
                     });
                 }})
         } else {
@@ -104,7 +104,7 @@ function checkValidationAndAppendExtension(file) {
         }
     })
 }
-function uploadToAWSAndUpdateDB(filePath, fileName, originalName) {
+function uploadToAWSAndUpdateDB(filePath, fileName, originalName, db) {
     return new Promise((resolve, reject) => {
         // read file
         fs.readFile(filePath, (err, data) => {

@@ -25,3 +25,10 @@ body {
     align-items: flex-start;
     justify-content: center;
 }
+.index-content-area-column {
+    width: 300px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
