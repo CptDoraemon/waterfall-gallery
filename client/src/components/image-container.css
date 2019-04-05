@@ -20,6 +20,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    cursor: zoom-in;
 }
 .image-container-image img {
     object-fit: cover;
@@ -67,4 +68,21 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.image-container-zoom {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 999;
+    top: 0;
+    left: 0;
+    cursor: zoom-out;
+    transition: 0.3s;
+}
+.image-container-zoom img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }

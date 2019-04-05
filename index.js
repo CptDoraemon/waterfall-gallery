@@ -1,9 +1,11 @@
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser');
 const fs = require('fs');
 require('dotenv').config();
 // mongo
 const mongo = require('mongodb').MongoClient;
+const ObjectID = require('mongodb').ObjectID;
 // aws
 const aws = require('aws-sdk');
 aws.config.update({
@@ -35,6 +37,7 @@ app.use(cors());
 
 mongo.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, (err, client) => {
     const db = client.db(process.env.DBNAME);
+
     app.get('/', (req, res) => {
         res.sendFile(path.join(__dirname+'/client/build/index.html'));
     });
@@ -52,6 +55,22 @@ mongo.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, (err, client) 
                     res.send('success');
                 });
             });
+    });
+
+    app.post('/requestImage', bodyParser.json(), (req, res) => {
+        const idRequested = req.body.id;
+        (async function() {
+            try {
+                const data = await db.collection('waterfall-gallery')
+                    .find({_id: {$gt: ObjectID(idRequested)} })
+                    .sort({_id: 1})
+                    .limit(20)
+                    .toArray();
+                res.json({data: data})
+            } catch (e) {
+                console.log(e)
+            }
+        })();
     });
 
     const port = process.env.PORT || 5000;

@@ -127,7 +127,7 @@ class FunctionalUploader extends React.Component {
                     this.setState({phase: 'error'});
                 }
             };
-            xhr.open('post', 'http://localhost:5000/upload', true);
+            xhr.open('post', '/upload', true);
             xhr.send(form);
         }
     }
