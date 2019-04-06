@@ -3,5 +3,7 @@
 /client/node_modules
 **/.idea
 **/.DS_Store
+
 uploads/*
+!uploads/README.md
 .env
